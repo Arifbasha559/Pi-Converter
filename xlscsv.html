@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pi Converter</title>
+</head>
+<style>
+  
+</style>
+<body>
+  <header>
+
+    <div class="head">
+      <h2>
+      <img src="PngItem_1509642.png" height="20px" alt="">
+        Pi Converter</h2>
+    </div>
+          <div class="navbar">
+              <a style="border-radius: 10%;" href="/index.html">Home</a>
+              <div class="dropdown">
+                <button class="dropbtn">Converters
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <div class="header">
+                    <h2><img src="PngItem_1509642.png" height="20px" alt=""> PI Converters</h2>
+                  </div>
+                  <div class="row">
+                    <div class="column">
+                      <h3>Images</h3>
+                      <a href="/jpgpng.html">jpg to png</a>
+                      <a href="/pngjpg.html">png to jpg</a>
+
+                    </div>
+                    <div class="column">
+                      <h3>DOCUMENT</h3>
+                      <a href="/xlscsv.html">xls to csv</a>
+                      <a href="/csvxls.html">csv to xls</a>
+                    </div>
+                    <div class="column">
+                      <h3>VECTOR</h3>
+                      <a href="/pngsvg.html">png to svg</a>
+                      <a href="/svgpng.html">svg to png</a>
+                      <a href="/pngwebp.html">png to webp</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+  </header>
+    <main class="container">
+		<div>
+            <h1>XLS to CSV Converter and Downloader</h1>
+            
+            
+            <p style="margin-left: 2px;">Select an XLS file to convert:</p>
+            <input type="file" id="input-file" accept=".xls,.xlsx">
+            <!-- <div id="preview"></div> -->
+
+            <button id="convert-btn" >Convert</button>
+
+            <div id="output">
+                <p>Download the converted CSV file:</p>
+                <a href="#"  download id="download-link">Download</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer">
+
+            <p style="color: #b0afaf;">&copy; 2023 - Pi Converter by <a href="https://github.com/Arifbasha559" target="_blank" style="text-decoration: none; color: #fff;"> Arif</a></p>
+        </div>
+        </footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    // JavaScript for XLS to CSV Converter and Downloader
+
+const inputFile = document.getElementById('input-file');
+const convertBtn = document.getElementById('convert-btn');
+const downloadLink = document.getElementById('download-link');
+
+convertBtn.addEventListener('click', () => {
+    const file = inputFile.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const data = reader.result;
+            const workbook = XLS.read(data, {type: 'binary'});
+            const csv = XLS.utils.sheet_to_csv(workbook.Sheets[workbook.SheetNames[0]]);
+            const csvFile = new Blob([csv], {type: 'text/csv'});
+            downloadLink.href = URL.createObjectURL(csvFile);
+            downloadLink.click();
+        }
+        reader.readAsBinaryString(file);
+    }
+});
+  
+</script>
+</html>

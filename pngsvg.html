@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Converter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+
+    <div class="head">
+      <h2>
+      <img src="PngItem_1509642.png" height="20px" alt="">
+        Pi Converter</h2>
+    </div>
+          <div class="navbar">
+              <a style="border-radius: 10%;" href="/index.html">Home</a>
+          
+              <div class="dropdown">
+                <button class="dropbtn">Converters
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <div class="header">
+                    <h2><img src="PngItem_1509642.png" height="20px" alt=""> PI Converters</h2>
+                  </div>
+                  <div class="row">
+                    <div class="column">
+                      <h3>Images</h3>
+                      <a href="/jpgpng.html">jpg to png</a>
+                      <a href="/pngjpg.html">png to jpg</a>
+                    </div>
+                    <div class="column">
+                      <h3>DOCUMENT</h3>
+                      <a href="/xlscsv.html">xls to csv</a>
+                      <a href="/csvxls.html">csv to xls</a>
+                    </div>
+                    <div class="column">
+                      <h3>VECTOR</h3>
+                      <a href="/pngsvg.html">png to svg</a>
+                      <a href="/svgpng.html">svg to png</a>
+                      <a href="/pngwebp.html">png to webp</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+  </header>
+  <main class="container">
+    <div>
+
+      <h1>PNG to SVG Converter and Downloader</h1>
+      
+      <p>Select a PNG file to convert:</p>
+      <input type="file" id="input-file" accept=".png">
+      <!-- <div id="preview" style="height: 100px;"></div> -->
+      
+      <button id="convert-btn" >Convert</button>
+      
+      <div id="output">
+        <p>Download the converted SVG file:</p>
+        <a href="#"  download id="download-link">Download</a>
+      </div>
+    </div>
+    </main>
+    
+  <footer>
+    <div class="footer">
+
+      <p style="color: #b0afaf;">&copy; 2023 - Pi Converter by <a href="https://github.com/Arifbasha559" target="_blank"
+          style="text-decoration: none; color: #fff;"> Arif</a></p>
+    </div>
+  </footer>
+  <script>
+   // JavaScript for PNG to SVG Converter and Downloader
+
+const inputFile = document.getElementById('input-file');
+const preview = document.getElementById('preview');
+const convertBtn = document.getElementById('convert-btn');
+const downloadLink = document.getElementById('download-link');
+
+inputFile.addEventListener('change', () => {
+    const file = inputFile.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            preview.innerHTML = `<img src="${reader.result}" alt="Preview Image">`;
+        }
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '';
+    }
+});
+
+convertBtn.addEventListener('click', () => {
+    const file = inputFile.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const svgXml = `<svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><img src="${canvas.toDataURL('image/png')}"/></div></foreignObject></svg>`;
+                const blob = new Blob([svgXml], { type: 'image/svg+xml' });
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.click();
+            }
+            img.src = reader.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+
+  </script>
+</body>
+
+</html>
